@@ -18,4 +18,7 @@ public class Tokens {
   public static final String RANGE_SUFFIX = " )";
 
   public static final String FLUX_CONCAT = "|> ";
+
+  public static final String FUNC_ARG_LIST_START = "( ";
+  public static final String FUNC_ARG_LIST_END = " )";
 }
