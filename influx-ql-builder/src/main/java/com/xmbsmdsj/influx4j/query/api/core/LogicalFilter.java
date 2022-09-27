@@ -22,10 +22,25 @@ public final class LogicalFilter implements Filter {
   private Filter left;
   private Filter right;
 
-  public LogicalFilter create() {
+  public static LogicalFilter create() {
     var res = new LogicalFilter();
     res.root = true;
     return res;
+  }
+
+  public LogicalFilter and(Filter left, Filter right) {
+    return complete(Logic.AND, left, right);
+  }
+
+  public LogicalFilter or(Filter left, Filter right) {
+    return complete(Logic.OR, left, right);
+  }
+
+  public LogicalFilter complete(Logic logic, Filter left, Filter right) {
+    this.logic = logic;
+    this.left = left;
+    this.right = right;
+    return this;
   }
 
   @Override

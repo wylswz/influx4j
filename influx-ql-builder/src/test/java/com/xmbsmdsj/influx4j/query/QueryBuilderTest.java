@@ -3,9 +3,13 @@ package com.xmbsmdsj.influx4j.query;
 
 import com.xmbsmdsj.influx4j.query.api.BuiltIn;
 import com.xmbsmdsj.influx4j.query.api.Query;
+import com.xmbsmdsj.influx4j.query.api.core.LambdaFilter;
+import com.xmbsmdsj.influx4j.query.api.core.LogicalFilter;
 import com.xmbsmdsj.influx4j.query.api.operation.BinaryOperation;
 import com.xmbsmdsj.influx4j.query.api.reference.TagRef;
 import com.xmbsmdsj.influx4j.query.api.type.StringValue;
+import com.xmbsmdsj.influx4j.query.api.type.Value;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,5 +54,24 @@ public class QueryBuilderTest {
                         |> filter(fn: (r) =>  r._field  == "amount")
                         """, s
         );
+    }
+
+    @Test
+    public void testLogicalFilter() {
+        var b = Query.Builder.fromBucket("local");
+        b.range(Instant.ofEpochMilli(1664273184106L), null)
+        .withField("amount")
+                .filter(LogicalFilter.create().and(
+                        new LambdaFilter(TagRef.of(BuiltIn.MEASUREMENT), BinaryOperation.EQ, Value.ofString("sample_measure")),
+                        new LambdaFilter(TagRef.of("classification"), BinaryOperation.EQ, Value.ofString("class-1"))
+                        ));
+        String s = b.build().toQueryString();
+        Assert.assertEquals(
+                """    
+                from (bucket: "local")
+                |> range( start: 1664273184106 )
+                |> filter(fn: (r) =>  r._field  == "amount")
+                |> filter(fn: (r) =>  r._measurement  == "sample_measure" and  r.classification  == "class-1")
+                """, s);
     }
 }

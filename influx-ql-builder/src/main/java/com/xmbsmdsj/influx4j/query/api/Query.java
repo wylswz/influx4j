@@ -1,5 +1,6 @@
 package com.xmbsmdsj.influx4j.query.api;
 
+import com.xmbsmdsj.influx4j.query.api.core.Filter;
 import com.xmbsmdsj.influx4j.query.api.core.From;
 import com.xmbsmdsj.influx4j.query.api.core.IFlux;
 import com.xmbsmdsj.influx4j.query.api.core.LambdaFilter;
@@ -43,7 +44,11 @@ public class Query {
     }
 
     public Builder filter(Ref target, BinaryOperation op, Value value) {
-      this.fluxes.add(new LambdaFilter(target, op, value));
+      return this.filter(new LambdaFilter(target, op, value));
+    }
+
+    public Builder filter(Filter f) {
+      this.fluxes.add(f);
       return this;
     }
 
