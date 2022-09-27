@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>influx4j</artifactId>
-        <groupId>org.xmbsmdsj</groupId>
+        <artifactId>influx4j-parent</artifactId>
+        <groupId>org.xmbsmdsj.influx4j</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>influx-ql-builder</artifactId>
+    <artifactId>influx4j-query-builder</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
