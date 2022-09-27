@@ -13,7 +13,6 @@ public class TagRef implements Ref {
     return new TagRef(tagName);
   }
 
-
   @Override
   public String name() {
     return tagName;

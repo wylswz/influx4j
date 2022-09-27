@@ -16,43 +16,42 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Window implements IFlux, IFunction {
 
-    private final TemporalAmount windowSize;
+  private final TemporalAmount windowSize;
 
-    public static Window every(long num, ChronoUnit unit) {
-        return new Window(Duration.of(num, unit));
-    }
+  public static Window every(long num, ChronoUnit unit) {
+    return new Window(Duration.of(num, unit));
+  }
 
-    public static Window everyMinutes(long minutes) {
-        return every(minutes, ChronoUnit.MINUTES);
-    }
+  public static Window everyMinutes(long minutes) {
+    return every(minutes, ChronoUnit.MINUTES);
+  }
 
-    public static Window everySeconds(long seconds) {
-        return every(seconds, ChronoUnit.SECONDS);
-    }
+  public static Window everySeconds(long seconds) {
+    return every(seconds, ChronoUnit.SECONDS);
+  }
 
-    public static Window everyHours(long hour) {
-        return every(hour, ChronoUnit.HOURS);
-    }
+  public static Window everyHours(long hour) {
+    return every(hour, ChronoUnit.HOURS);
+  }
 
-    public static Window everyDays(long days) {
-        return every(days, ChronoUnit.DAYS);
-    }
+  public static Window everyDays(long days) {
+    return every(days, ChronoUnit.DAYS);
+  }
 
+  @Override
+  public String name() {
+    return "window";
+  }
 
-    @Override
-    public String name() {
-        return "window";
-    }
+  @Override
+  public List<IArgs> arguments() {
+    return Collections.singletonList(
+        new IArgs(
+            "every", Long.valueOf(windowSize.get(ChronoUnit.MILLIS)).toString(), ArgType.SYMBOL));
+  }
 
-    @Override
-    public List<IArgs> arguments() {
-        return Collections.singletonList(
-                new IArgs("every", Long.valueOf(windowSize.get(ChronoUnit.MILLIS)).toString(), ArgType.SYMBOL)
-        );
-    }
-
-    @Override
-    public String materialize() {
-        return materializeFunction();
-    }
+  @Override
+  public String materialize() {
+    return materializeFunction();
+  }
 }

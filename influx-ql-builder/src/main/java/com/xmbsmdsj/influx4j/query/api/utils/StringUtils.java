@@ -22,6 +22,6 @@ public class StringUtils {
   }
 
   public static String pad(String s) {
-    return  " " + s + " ";
+    return " " + s + " ";
   }
 }
